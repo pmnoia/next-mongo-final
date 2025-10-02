@@ -27,6 +27,7 @@ export default function CustomerDetailPage() {
     const router = useRouter();
     const params = useParams();
     const customerId = params.id;
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || '/api';
     
     const [customer, setCustomer] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -39,7 +40,7 @@ export default function CustomerDetailPage() {
                 setLoading(true);
                 setError(null);
                 
-                const response = await fetch(`/api/customer/${customerId}`);
+                const response = await fetch(`${API_BASE}/customer/${customerId}`);
                 
                 if (response.ok) {
                     const customerData = await response.json();

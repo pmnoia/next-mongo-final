@@ -30,6 +30,7 @@ import { useRouter } from 'next/navigation';
 
 export default function CustomerPage() {
     const router = useRouter();
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || '/api';
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [formOpen, setFormOpen] = useState(false);
@@ -53,7 +54,7 @@ export default function CustomerPage() {
     const fetchCustomers = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await fetch('/api/customer');
+            const response = await fetch(`${API_BASE}/customer`);
             if (response.ok) {
                 const data = await response.json();
                 setCustomers(data);
@@ -88,7 +89,7 @@ export default function CustomerPage() {
         }
 
         try {
-            const url = editingCustomer ? `/api/customer/${editingCustomer._id}` : '/api/customer';
+            const url = editingCustomer ? `${API_BASE}/customer/${editingCustomer._id}` : `${API_BASE}/customer`;
             const method = editingCustomer ? 'PUT' : 'POST';
             
             const response = await fetch(url, {
@@ -121,7 +122,7 @@ export default function CustomerPage() {
     // Handle delete
     const handleDelete = async (id) => {
         try {
-            const response = await fetch(`/api/customer/${id}`, {
+            const response = await fetch(`${API_BASE}/customer/${id}`, {
                 method: 'DELETE',
             });
 
