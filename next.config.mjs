@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/next-mongo',
+  basePath: '/fin-customer',
   experimental: {
     instrumentationHook: true,
   },
