@@ -197,7 +197,12 @@ export default function CustomerPage() {
 
                 {/* Navigation */}
                 <Box sx={{ mb: 3 }}>
-                    <Button href="/" sx={{ mr: 2 }}>← Back to Home</Button>
+                    <Button 
+                        onClick={() => router.push('/')} 
+                        sx={{ mr: 2 }}
+                    >
+                        ← Back to Home
+                    </Button>
                 </Box>
 
                 {/* Customer List */}
