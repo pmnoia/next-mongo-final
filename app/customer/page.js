@@ -1,6 +1,6 @@
 "use client"
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { 
     Box, 
     Button, 
@@ -45,8 +45,12 @@ export default function CustomerPage() {
         interests: ''
     });
 
+    const showSnackbar = useCallback((message, severity = 'success') => {
+        setSnackbar({ open: true, message, severity });
+    }, []);
+
     // Fetch customers
-    const fetchCustomers = async () => {
+    const fetchCustomers = useCallback(async () => {
         try {
             setLoading(true);
             const response = await fetch('/api/customer');
@@ -62,16 +66,12 @@ export default function CustomerPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showSnackbar]);
 
     // Load customers on component mount
     useEffect(() => {
         fetchCustomers();
-    }, []);
-
-    const showSnackbar = (message, severity = 'success') => {
-        setSnackbar({ open: true, message, severity });
-    };
+    }, [fetchCustomers]);
 
     const closeSnackbar = () => {
         setSnackbar({ ...snackbar, open: false });
@@ -354,7 +354,7 @@ export default function CustomerPage() {
                 <DialogTitle>Confirm Delete</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Are you sure you want to delete customer "{deleteDialog.name}"? This action cannot be undone.
+                        Are you sure you want to delete customer &quot;{deleteDialog.name}&quot;? This action cannot be undone.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
